@@ -13,8 +13,8 @@ class GUI_Stylesheets(QObject):
         self.mainWindow = ("background-color: rgba(49, 51, 53, 240);")
 		
         self.mainTitle =	("font: bold 35px Verdana; "
-							"color: white; "
-							"background-color: rgba(18,151,147,0)"
+							"color: rgba(8, 139, 174, 200); "
+							"background-color: rgba(18,151,147,0);"
 							)
 		
         self.tabs = 	("QTabWidget::pane {border-top: 1px solid white;} "
@@ -73,3 +73,31 @@ class GUI_Stylesheets(QObject):
 								"color: white; "
 								"border: none;"
 							)
+
+        self.commandBox = 	("font: 16px Verdana; "
+                              "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+                                  "stop:0 rgba(242, 242, 242, 240), "
+                                  "stop:1 rgba(255,255,255,255))"
+                              )
+
+        self.sendButton = ("font: bold 12px Verdana; "
+                           "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+                                "stop:0 rgba(88, 139, 174, 240), "
+                                "stop:1 rgba(255,255,255,255)); "
+                           "border-style: outset; "
+                           "border-radius: 4px; "
+                           "border-width: 1px; "
+                           "border-color: white; "
+                           "padding: 4px"
+                           )
+
+        self.buttonPressed = ("font: bold 12px Verdana; "
+							  "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+							  "stop:0 rgba(213, 213, 213, 240), "
+							  "stop:1 rgba(255,255,255,255)); "
+							  "border-style: outset; "
+							  "border-radius: 4px; "
+							  "border-width: 1px; "
+							  "border-color: white; "
+							  "padding: 4px"
+							  )
