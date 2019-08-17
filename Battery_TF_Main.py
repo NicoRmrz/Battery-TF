@@ -116,39 +116,37 @@ class Window(QMainWindow):
         # --------------------------------------------------------------
         # Instantiate Battery 1 GUI Objects
         self.remainingCapaAlarm_1()
-        self.remainingCapaAlarmBox_1()
         self.batteryMode_1()
-        self.batteryModeBox_1()
+        self.voltage_1()
+        self.current_1()
         self.averageCurrent_1()
-        self.averageCurrentBox_1()
-
-        # Create Layout to go on Battery 1 tab
-        remCapAlarm_Layout1 = QHBoxLayout()
-        remCapAlarm_Layout1.addWidget(self.remCapAlarm1)
-        remCapAlarm_Layout1.addWidget(self.remCapAlarmBox1,0, Qt.AlignLeft)
-        remCapAlarm_Layout1.setSpacing(0)
-        remCapAlarm_Layout1.setContentsMargins(0, 0, 0, 0)
-
-        # Create Layout to go on Battery 1 tab
-        battMode_Layout1 = QHBoxLayout()
-        battMode_Layout1.addWidget(self.battMode1)
-        battMode_Layout1.addWidget(self.battModeBox1, 0 , Qt.AlignLeft)
-        battMode_Layout1.setSpacing(0)
-        battMode_Layout1.setContentsMargins(0, 0, 0, 0)
-
-        # Create Layout to go on Battery 1 tab
-        avgCurr_Layout1 = QHBoxLayout()
-        avgCurr_Layout1.addWidget(self.avgCurr1)
-        avgCurr_Layout1.addWidget(self.avgCurrBox1, 0 , Qt.AlignLeft)
-        avgCurr_Layout1.setSpacing(0)
-        avgCurr_Layout1.setContentsMargins(0, 0, 0, 0)
-
+        self.relativeStatOfCharge_1()
+        self.absoluteStatOfCharge_1()
+        self.remainingCapacity_1()
+        self.fullChargeCapacity_1()
+        self.runTimeToEmpty_1()
+        self.averageTimeToEmpty_1()
+        self.averageTimeToFull_1()
+        self.chargingCurrent_1()
+        self.chargingVoltage_1()
+  
         # Create main Layout to go on Battery 1 tab
         vertical_battery1_layout = QVBoxLayout()
-        vertical_battery1_layout.addLayout(remCapAlarm_Layout1)
-        vertical_battery1_layout.addLayout(battMode_Layout1)
-        vertical_battery1_layout.addLayout(avgCurr_Layout1)
-        vertical_battery1_layout.setSpacing(10)
+        vertical_battery1_layout.addLayout(self.remCapAlarm_Layout1)
+        vertical_battery1_layout.addLayout(self.battMode_Layout1)
+        vertical_battery1_layout.addLayout(self.voltage_Layout1)
+        vertical_battery1_layout.addLayout(self.current_Layout1)
+        vertical_battery1_layout.addLayout(self.avgCurr_Layout1)
+        vertical_battery1_layout.addLayout(self.relStateCharge_Layout1)
+        vertical_battery1_layout.addLayout(self.absStateCharge_Layout1)
+        vertical_battery1_layout.addLayout(self.remCap_Layout1)
+        vertical_battery1_layout.addLayout(self.fullCharge_Layout1)
+        vertical_battery1_layout.addLayout(self.runTimeToEmpty_Layout1)
+        vertical_battery1_layout.addLayout(self.avgTimeToEmpty_Layout1)
+        vertical_battery1_layout.addLayout(self.avgTimeToFull_Layout1)
+        vertical_battery1_layout.addLayout(self.charging_Current_Layout1)
+        vertical_battery1_layout.addLayout(self.charging_Voltag_Layout1)
+        vertical_battery1_layout.setSpacing(0)
         vertical_battery1_layout.setContentsMargins(0, 0, 0, 0)
 
         # Add home vertical layout to main tab layout
@@ -252,34 +250,228 @@ class Window(QMainWindow):
     # ----------- Create Battery 1 Tab GUI Objects  --------------------
     # ------------------------------------------------------------------
     def remainingCapaAlarm_1(self):
+        # create label
         self.remCapAlarm1 = QLabel(self)
         self.remCapAlarm1.setText("Remaining Capacity Alarm")
         self.remCapAlarm1.setStyleSheet(GUI_Style.nameLabel)
    
-    def remainingCapaAlarmBox_1(self):
+        # create input box
         self.remCapAlarmBox1 = QLineEdit(self)
         self.remCapAlarmBox1.setStyleSheet(GUI_Style.updateField)
         self.remCapAlarmBox1.setMaximumWidth(50)
 
+        # create layout
+        self.remCapAlarm_Layout1 = QHBoxLayout()
+        self.remCapAlarm_Layout1.addWidget(self.remCapAlarm1)
+        self.remCapAlarm_Layout1.addWidget(self.remCapAlarmBox1,0, Qt.AlignLeft)
+
     def batteryMode_1(self):
+         # create label
         self.battMode1 = QLabel(self)
         self.battMode1.setText("Battery Mode")
         self.battMode1.setStyleSheet(GUI_Style.nameLabel)
-   
-    def batteryModeBox_1(self):
+        
+        # create input box
         self.battModeBox1 = QLineEdit(self)
         self.battModeBox1.setStyleSheet(GUI_Style.updateField)
         self.battModeBox1.setMaximumWidth(50)
 
+        # create layout
+        self.battMode_Layout1 = QHBoxLayout()
+        self.battMode_Layout1.addWidget(self.battMode1)
+        self.battMode_Layout1.addWidget(self.battModeBox1, 0 , Qt.AlignLeft)
+
+    def voltage_1(self):
+         # create label
+        self.voltage1 = QLabel(self)
+        self.voltage1.setText("Voltage")
+        self.voltage1.setStyleSheet(GUI_Style.nameLabel)
+        
+        # create input box
+        self.voltageBox1 = QLineEdit(self)
+        self.voltageBox1.setStyleSheet(GUI_Style.updateField)
+        self.voltageBox1.setMaximumWidth(50)
+
+        # create layout
+        self.voltage_Layout1 = QHBoxLayout()
+        self.voltage_Layout1.addWidget(self.voltage1)
+        self.voltage_Layout1.addWidget(self.voltageBox1, 0 , Qt.AlignLeft)
+
+    def current_1(self):
+        # create label
+        self.current1 = QLabel(self)
+        self.current1.setText("Current")
+        self.current1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.currentBox1 = QLineEdit(self)
+        self.currentBox1.setStyleSheet(GUI_Style.updateField)
+        self.currentBox1.setMaximumWidth(50)
+
+        # create layout
+        self.current_Layout1 = QHBoxLayout()
+        self.current_Layout1.addWidget(self.current1)
+        self.current_Layout1.addWidget(self.currentBox1, 0 , Qt.AlignLeft)
+
     def averageCurrent_1(self):
+        # create label
         self.avgCurr1 = QLabel(self)
         self.avgCurr1.setText("Average Current")
         self.avgCurr1.setStyleSheet(GUI_Style.nameLabel)
    
-    def averageCurrentBox_1(self):
+        # create input box
         self.avgCurrBox1 = QLineEdit(self)
         self.avgCurrBox1.setStyleSheet(GUI_Style.updateField)
         self.avgCurrBox1.setMaximumWidth(50)
+
+        # create layout
+        self.avgCurr_Layout1 = QHBoxLayout()
+        self.avgCurr_Layout1.addWidget(self.avgCurr1)
+        self.avgCurr_Layout1.addWidget(self.avgCurrBox1, 0 , Qt.AlignLeft)
+
+    def relativeStatOfCharge_1(self):
+        # create label
+        self.relStateCharge1 = QLabel(self)
+        self.relStateCharge1.setText("Relative State Of Charge")
+        self.relStateCharge1.setStyleSheet(GUI_Style.nameLabel)
+       
+       # create input box
+        self.relStateChargeBox1 = QLineEdit(self)
+        self.relStateChargeBox1.setStyleSheet(GUI_Style.updateField)
+        self.relStateChargeBox1.setMaximumWidth(50)
+
+        # create layout
+        self.relStateCharge_Layout1 = QHBoxLayout()
+        self.relStateCharge_Layout1.addWidget(self.relStateCharge1)
+        self.relStateCharge_Layout1.addWidget(self.relStateChargeBox1, 0 , Qt.AlignLeft)
+
+    def absoluteStatOfCharge_1(self):
+        # create label
+        self.absStateCharge1 = QLabel(self)
+        self.absStateCharge1.setText("Absolute State Of Charge")
+        self.absStateCharge1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.absStateChargeBox1 = QLineEdit(self)
+        self.absStateChargeBox1.setStyleSheet(GUI_Style.updateField)
+        self.absStateChargeBox1.setMaximumWidth(50)
+
+        # create layout
+        self.absStateCharge_Layout1 = QHBoxLayout()
+        self.absStateCharge_Layout1.addWidget(self.absStateCharge1)
+        self.absStateCharge_Layout1.addWidget(self.absStateChargeBox1, 0 , Qt.AlignLeft)
+
+    def remainingCapacity_1(self):
+        # create label
+        self.remainingCapacity1 = QLabel(self)
+        self.remainingCapacity1.setText("Remaining Capacity")
+        self.remainingCapacity1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.remainingCapacityBox1 = QLineEdit(self)
+        self.remainingCapacityBox1.setStyleSheet(GUI_Style.updateField)
+        self.remainingCapacityBox1.setMaximumWidth(50)
+
+        # create layout
+        self.remCap_Layout1 = QHBoxLayout()
+        self.remCap_Layout1.addWidget(self.remainingCapacity1)
+        self.remCap_Layout1.addWidget(self.remainingCapacityBox1, 0 , Qt.AlignLeft)
+
+    def fullChargeCapacity_1(self):
+        # create label
+        self.fullChargeCapacity1 = QLabel(self)
+        self.fullChargeCapacity1.setText("Full Charge Capacity")
+        self.fullChargeCapacity1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.fullChargeCapacityBox1 = QLineEdit(self)
+        self.fullChargeCapacityBox1.setStyleSheet(GUI_Style.updateField)
+        self.fullChargeCapacityBox1.setMaximumWidth(50)
+
+        # create layout
+        self.fullCharge_Layout1 = QHBoxLayout()
+        self.fullCharge_Layout1.addWidget(self.fullChargeCapacity1)
+        self.fullCharge_Layout1.addWidget(self.fullChargeCapacityBox1, 0 , Qt.AlignLeft)
+
+    def runTimeToEmpty_1(self):
+        # create label
+        self.runTimeToEmpty1 = QLabel(self)
+        self.runTimeToEmpty1.setText("Run Time To Empty")
+        self.runTimeToEmpty1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.runTimeToEmptyBox1 = QLineEdit(self)
+        self.runTimeToEmptyBox1.setStyleSheet(GUI_Style.updateField)
+        self.runTimeToEmptyBox1.setMaximumWidth(50)
+
+        # create layout
+        self.runTimeToEmpty_Layout1 = QHBoxLayout()
+        self.runTimeToEmpty_Layout1.addWidget(self.runTimeToEmpty1)
+        self.runTimeToEmpty_Layout1.addWidget(self.runTimeToEmptyBox1, 0 , Qt.AlignLeft)
+
+    def averageTimeToEmpty_1(self):
+        # create label
+        self.avgTimeToEmpty1 = QLabel(self)
+        self.avgTimeToEmpty1.setText("Average Time To Empty")
+        self.avgTimeToEmpty1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.avgTimeToEmptyBox1 = QLineEdit(self)
+        self.avgTimeToEmptyBox1.setStyleSheet(GUI_Style.updateField)
+        self.avgTimeToEmptyBox1.setMaximumWidth(50)
+
+        # create layout
+        self.avgTimeToEmpty_Layout1 = QHBoxLayout()
+        self.avgTimeToEmpty_Layout1.addWidget(self.avgTimeToEmpty1)
+        self.avgTimeToEmpty_Layout1.addWidget(self.avgTimeToEmptyBox1, 0 , Qt.AlignLeft)
+
+    def averageTimeToFull_1(self):
+        # create label
+        self.avgTimeToFull1 = QLabel(self)
+        self.avgTimeToFull1.setText("Average Time To Full")
+        self.avgTimeToFull1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.avgTimeToFullBox1 = QLineEdit(self)
+        self.avgTimeToFullBox1.setStyleSheet(GUI_Style.updateField)
+        self.avgTimeToFullBox1.setMaximumWidth(50)
+
+        # create layout
+        self.avgTimeToFull_Layout1 = QHBoxLayout()
+        self.avgTimeToFull_Layout1.addWidget(self.avgTimeToFull1)
+        self.avgTimeToFull_Layout1.addWidget(self.avgTimeToFullBox1, 0 , Qt.AlignLeft)     
+        
+    def chargingCurrent_1(self):
+        # create label
+        self.chargingCurrent1 = QLabel(self)
+        self.chargingCurrent1.setText("Charging Current")
+        self.chargingCurrent1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.chargingCurrentBox1 = QLineEdit(self)
+        self.chargingCurrentBox1.setStyleSheet(GUI_Style.updateField)
+        self.chargingCurrentBox1.setMaximumWidth(50)
+
+        # create layout
+        self.charging_Current_Layout1 = QHBoxLayout()
+        self.charging_Current_Layout1.addWidget(self.chargingCurrent1)
+        self.charging_Current_Layout1.addWidget(self.chargingCurrentBox1, 0 , Qt.AlignLeft)          
+
+    def chargingVoltage_1(self):
+        # create label
+        self.chargingVoltage1 = QLabel(self)
+        self.chargingVoltage1.setText("Charging Voltage")
+        self.chargingVoltage1.setStyleSheet(GUI_Style.nameLabel)
+   
+        # create input box
+        self.chargingVoltageBox1 = QLineEdit(self)
+        self.chargingVoltageBox1.setStyleSheet(GUI_Style.updateField)
+        self.chargingVoltageBox1.setMaximumWidth(50)
+
+        # create layout
+        self.charging_Voltag_Layout1 = QHBoxLayout()
+        self.charging_Voltag_Layout1.addWidget(self.chargingVoltage1)
+        self.charging_Voltag_Layout1.addWidget(self.chargingVoltageBox1, 0 , Qt.AlignLeft)
 
     # ------------------------------------------------------------------
     # ----------- Create Battery 2 Tab GUI Objects  --------------------
