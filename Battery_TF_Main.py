@@ -10,13 +10,14 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal, pyqtSlot, QObject, QSize
 
 # imports from user made files
 from GUI_Stylesheets import GUI_Stylesheets
-from GUI_Buttons import Send_Command_Button
+from GUI_Buttons import Send_Command_Button, Logo_Button
 
 # Current version of application - Update for new builds
 appVersion = "1.0"  # Update version
 
 # Icon Image locations
 Main_path = os.getcwd() + "/"
+Icon_Path = Main_path + "/Logo/logo.png"
 
 # Instantiate style sheets for GUI Objects
 GUI_Style = GUI_Stylesheets()
@@ -33,7 +34,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Battery TF v" + appVersion)
         self.setStyleSheet(GUI_Style.mainWindow)
         self.setMinimumSize(900, 600)
-        #self.setWindowIcon(QIcon(Icon_Path))
+        self.setWindowIcon(QIcon(Icon_Path))
 
         # --------------------------------------------------------------
         # -------------------- Initialize  -----------------------------
@@ -72,15 +73,18 @@ class Window(QMainWindow):
         # --------------------------------------------------------------
         # Instantiate GUI objects
         self.MainTitle()
-        self.ConsoleLog()
+        
+        self.Console_Log()
+        self.MainLogoButton()
         self.inputCommandPrompt()
         self.sendCommandButton()
 
         # Add title/ logo to the main title layout
         Main_Title_Layout = QHBoxLayout()
-       # Main_Title_Layout.addWidget(self.Logo_btn)
+        Main_Title_Layout.addWidget(self.Logo_btn, 0, Qt.AlignRight)
         Main_Title_Layout.addWidget(self.MainTitleText, 0, Qt.AlignLeft)
-        Main_Title_Layout.setSpacing(10)
+        Main_Title_Layout.setSpacing(20)
+        Main_Title_Layout.setContentsMargins(0, 0, 350, 0)
 
         # Layout command prompt and send button
         promptLayout = QHBoxLayout()
@@ -100,7 +104,6 @@ class Window(QMainWindow):
         horizontalWindow_layout.addLayout(commandWindowLayout)
         horizontalWindow_layout.setSpacing(20)
 
-
         # Add tabs and video stream to main window layout
         Full_Window_layout = QVBoxLayout()
         Full_Window_layout.addLayout(Main_Title_Layout)
@@ -112,15 +115,41 @@ class Window(QMainWindow):
         # ------------- Create Battery 1 Tab Layout --------------------
         # --------------------------------------------------------------
         # Instantiate Battery 1 GUI Objects
-
+        self.remainingCapaAlarm_1()
+        self.remainingCapaAlarmBox_1()
+        self.batteryMode_1()
+        self.batteryModeBox_1()
+        self.averageCurrent_1()
+        self.averageCurrentBox_1()
 
         # Create Layout to go on Battery 1 tab
-        vertical_battery1_layout = QVBoxLayout()
+        remCapAlarm_Layout1 = QHBoxLayout()
+        remCapAlarm_Layout1.addWidget(self.remCapAlarm1)
+        remCapAlarm_Layout1.addWidget(self.remCapAlarmBox1,0, Qt.AlignLeft)
+        remCapAlarm_Layout1.setSpacing(0)
+        remCapAlarm_Layout1.setContentsMargins(0, 0, 0, 0)
 
-        # Add buttons, console log and progress bar to layout
-        #vertical_battery1_layout.addWidget(self.stp_rec_btn, 0, Qt.AlignCenter)
-        vertical_battery1_layout.setSpacing(30)
-        vertical_battery1_layout.setContentsMargins(0, 20, 0, 0)
+        # Create Layout to go on Battery 1 tab
+        battMode_Layout1 = QHBoxLayout()
+        battMode_Layout1.addWidget(self.battMode1)
+        battMode_Layout1.addWidget(self.battModeBox1, 0 , Qt.AlignLeft)
+        battMode_Layout1.setSpacing(0)
+        battMode_Layout1.setContentsMargins(0, 0, 0, 0)
+
+        # Create Layout to go on Battery 1 tab
+        avgCurr_Layout1 = QHBoxLayout()
+        avgCurr_Layout1.addWidget(self.avgCurr1)
+        avgCurr_Layout1.addWidget(self.avgCurrBox1, 0 , Qt.AlignLeft)
+        avgCurr_Layout1.setSpacing(0)
+        avgCurr_Layout1.setContentsMargins(0, 0, 0, 0)
+
+        # Create main Layout to go on Battery 1 tab
+        vertical_battery1_layout = QVBoxLayout()
+        vertical_battery1_layout.addLayout(remCapAlarm_Layout1)
+        vertical_battery1_layout.addLayout(battMode_Layout1)
+        vertical_battery1_layout.addLayout(avgCurr_Layout1)
+        vertical_battery1_layout.setSpacing(10)
+        vertical_battery1_layout.setContentsMargins(0, 0, 0, 0)
 
         # Add home vertical layout to main tab layout
         self.Battery1_Tab.setLayout(vertical_battery1_layout)
@@ -130,10 +159,10 @@ class Window(QMainWindow):
         # --------------------------------------------------------------
         # Instantiate Battery 2 GUI Objects
 
+
+
         # Create Layout to go on Battery 2 tab
         vertical_battery2_layout = QVBoxLayout()
-
-        # Add buttons, console log and progress bar to layout
         vertical_battery2_layout.setSpacing(30)
         vertical_battery2_layout.setContentsMargins(0, 20, 0, 0)
 
@@ -152,16 +181,15 @@ class Window(QMainWindow):
     # --------------------------------------------------------------------------------------------------------------
     # ----------------------------- GUI Objects/ Functions ---------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------
-
     # ------------------------------------------------------------------
     # ------------------- Keyboard Key Functions -----------------------
     # ------------------------------------------------------------------
-    # Function to send command when a key is pressed
     def keyPressEvent(self, event):
         key = event.key()
 
         if key == Qt.Key_Return:  # Send button
             self.send_btn.Un_Click()
+
     # ------------------------------------------------------------------
     # ------------------- Main Title Function --------------------------
     # ------------------------------------------------------------------
@@ -169,10 +197,18 @@ class Window(QMainWindow):
         self.MainTitleText = QLabel(self)
         self.MainTitleText.setText("Battery Test Fixture")
         self.MainTitleText.setStyleSheet(GUI_Style.mainTitle)
+
+    def MainLogoButton(self):
+        self.Logo_btn = Logo_Button(self, "", self.ConsoleLog)
+        self.Logo_btn.setStyleSheet(GUI_Style.startButton)
+        self.Logo_btn.pressed.connect(self.Logo_btn.On_Click)
+        self.Logo_btn.released.connect(self.Logo_btn.Un_Click)
+        self.Logo_btn.setIcon(QIcon(Icon_Path))
+        self.Logo_btn.setIconSize(QSize(80, 80))
     # ------------------------------------------------------------------
     # -------------------  Create Console Log --------------------------
     # ------------------------------------------------------------------
-    def ConsoleLog(self):
+    def Console_Log(self):
         self.ConsoleLog = QTextEdit(self)
         #self.ConsoleLog.setMaximumHeight(100)
         self.ConsoleLog.setStyleSheet(GUI_Style.consoleLog)
@@ -212,12 +248,38 @@ class Window(QMainWindow):
         # Add Tabs and Tab Icon to tab widget
         self.MyTabs.addTab(self.Battery1_Tab, ' Battery 1')
         self.MyTabs.addTab(self.Battery2_Tab, ' Battery 2')
-
-
     # ------------------------------------------------------------------
     # ----------- Create Battery 1 Tab GUI Objects  --------------------
     # ------------------------------------------------------------------
+    def remainingCapaAlarm_1(self):
+        self.remCapAlarm1 = QLabel(self)
+        self.remCapAlarm1.setText("Remaining Capacity Alarm")
+        self.remCapAlarm1.setStyleSheet(GUI_Style.nameLabel)
+   
+    def remainingCapaAlarmBox_1(self):
+        self.remCapAlarmBox1 = QLineEdit(self)
+        self.remCapAlarmBox1.setStyleSheet(GUI_Style.updateField)
+        self.remCapAlarmBox1.setMaximumWidth(50)
 
+    def batteryMode_1(self):
+        self.battMode1 = QLabel(self)
+        self.battMode1.setText("Battery Mode")
+        self.battMode1.setStyleSheet(GUI_Style.nameLabel)
+   
+    def batteryModeBox_1(self):
+        self.battModeBox1 = QLineEdit(self)
+        self.battModeBox1.setStyleSheet(GUI_Style.updateField)
+        self.battModeBox1.setMaximumWidth(50)
+
+    def averageCurrent_1(self):
+        self.avgCurr1 = QLabel(self)
+        self.avgCurr1.setText("Average Current")
+        self.avgCurr1.setStyleSheet(GUI_Style.nameLabel)
+   
+    def averageCurrentBox_1(self):
+        self.avgCurrBox1 = QLineEdit(self)
+        self.avgCurrBox1.setStyleSheet(GUI_Style.updateField)
+        self.avgCurrBox1.setMaximumWidth(50)
 
     # ------------------------------------------------------------------
     # ----------- Create Battery 2 Tab GUI Objects  --------------------
@@ -256,8 +318,6 @@ class Window(QMainWindow):
       #  self.RPICaptureThread.Set_Exit_Program(True)
        # self.RPICaptureThread.wait(100)
         pass
-
-
 
 # ----------------------------------------------------------------------
 # -------------------- MAIN LOOP ---------------------------------------

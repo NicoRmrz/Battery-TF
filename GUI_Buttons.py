@@ -48,7 +48,6 @@ class Send_Command_Button(QPushButton):
     def writeToConsoleLog(self, input_textbox):
         old_text = self.console_log.toPlainText()
         full_text = old_text + '\n' + input_textbox
-
         self.console_log.setText(full_text)  # write ESG feedback to ESG window
         self.console_log.setWordWrapMode(QTextOption.WordWrap)
         self.console_log.moveCursor(QTextCursor.End)
@@ -58,3 +57,47 @@ class Send_Command_Button(QPushButton):
         # Change button back to normal
         self.setStyleSheet(GUI_Style.sendButton)
 
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- Secret/ Logo QPushButton Class ---------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Logo_Button(QPushButton):     
+    old_window = None
+    new_window = None
+    NIGHT_MODE = False
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, consoleLog):
+        super(Logo_Button, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.LargeTextBox = consoleLog
+
+    # Function call for the click event
+    def On_Click(self):
+        pass
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        if self.NIGHT_MODE != True:
+            self.Night_Mode()
+            self.NIGHT_MODE = True
+
+        elif self.NIGHT_MODE != False:
+            self.Regular_Mode()
+            self.NIGHT_MODE = False
+            
+    # Night Mode
+    def Night_Mode(self):
+        pass
+        
+    # Regular Mode
+    def Regular_Mode(self):
+        pass
+        
+     # Function call to write to Console Log
+    def WriteToConsole(self, new_input):
+        self.old_window = self.large_textbox.toPlainText()
+        self.new_window = self.old_window + '\n' + new_input
+        self.large_textbox.setText(self.new_window)
+        self.large_textbox.moveCursor(QTextCursor.End)

@@ -101,3 +101,22 @@ class GUI_Stylesheets(QObject):
 							  "border-color: white; "
 							  "padding: 4px"
 							  )
+
+        self.startButton = 	("font: bold 12px Verdana; "
+							"background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+								"stop:0 rgba(242, 242, 242, 0), "
+								"stop:1 rgba(255,255,255,0)); "
+								"border-style: outset; "
+								"border-radius: 4px"
+							)
+        
+        self.nameLabel = ("font: bold 10px Verdana; "
+							"color: white; "
+							"background-color: rgba(18,151,147,0);"
+							)
+
+        self.updateField = ("font: 10px Verdana; "
+                              "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+                                  "stop:0 rgba(242, 242, 242, 240), "
+                                  "stop:1 rgba(255,255,255,255))"
+                              )
