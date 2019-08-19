@@ -110,7 +110,7 @@ class GUI_Stylesheets(QObject):
 								"border-radius: 4px"
 							)
         
-        self.nameLabel = ("font: bold 10px Verdana; "
+        self.nameLabel = ("font: bold 12px Verdana; "
 							"color: white; "
 							"background-color: rgba(18,151,147,0);"
 							)

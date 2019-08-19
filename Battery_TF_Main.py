@@ -30,10 +30,10 @@ class Window(QMainWindow):
     # Initialization of the GUI
     def __init__(self):
         super(Window, self).__init__()
-        self.setGeometry(50, 50, 900, 600)
+        self.setGeometry(50, 50, 1100, 750)
         self.setWindowTitle("Battery TF v" + appVersion)
         self.setStyleSheet(GUI_Style.mainWindow)
-        self.setMinimumSize(900, 600)
+        self.setMinimumSize(1100, 750)
         self.setWindowIcon(QIcon(Icon_Path))
 
         # --------------------------------------------------------------
@@ -151,6 +151,7 @@ class Window(QMainWindow):
         vertical_battery1_LeftLayout.addLayout(self.cellVoltage3_Layout1)
         vertical_battery1_LeftLayout.addLayout(self.cellVoltage2_Layout1)
         vertical_battery1_LeftLayout.addLayout(self.cellVoltage1_Layout1)
+        vertical_battery1_LeftLayout.setSpacing(10)
 
         vertical_battery1_RightLayout = QVBoxLayout()
         vertical_battery1_RightLayout.addLayout(self.remCapAlarm_Layout1)
@@ -164,6 +165,7 @@ class Window(QMainWindow):
         vertical_battery1_RightLayout.addLayout(self.runTimeToEmpty_Layout1)
         vertical_battery1_RightLayout.addLayout(self.avgTimeToEmpty_Layout1)
         vertical_battery1_RightLayout.addLayout(self.avgTimeToFull_Layout1)
+        vertical_battery1_RightLayout.setSpacing(10)
 
         battery1Tab_layout = QHBoxLayout()
         battery1Tab_layout.addLayout(vertical_battery1_LeftLayout)
@@ -213,6 +215,7 @@ class Window(QMainWindow):
         vertical_battery2_LeftLayout.addLayout(self.cellVoltage3_Layout2)
         vertical_battery2_LeftLayout.addLayout(self.cellVoltage2_Layout2)
         vertical_battery2_LeftLayout.addLayout(self.cellVoltage1_Layout2)
+        vertical_battery2_LeftLayout.setSpacing(10)
 
         vertical_battery2_RightLayout = QVBoxLayout()
         vertical_battery2_RightLayout.addLayout(self.remCapAlarm_Layout2)
@@ -226,6 +229,7 @@ class Window(QMainWindow):
         vertical_battery2_RightLayout.addLayout(self.runTimeToEmpty_Layout2)
         vertical_battery2_RightLayout.addLayout(self.avgTimeToEmpty_Layout2)
         vertical_battery2_RightLayout.addLayout(self.avgTimeToFull_Layout2)
+        vertical_battery2_RightLayout.setSpacing(10)
 
         battery2Tab_layout = QHBoxLayout()
         battery2Tab_layout.addLayout(vertical_battery2_LeftLayout)
@@ -305,7 +309,7 @@ class Window(QMainWindow):
     def tabWidget(self):
         self.MyTabs = QTabWidget()
         self.MyTabs.setStyleSheet(GUI_Style.tabs)
-        self.MyTabs.setMaximumWidth(400)
+        self.MyTabs.setMaximumWidth(500)
 
         # Create each individual tabs
         self.Battery1_Tab = QWidget()
@@ -322,6 +326,7 @@ class Window(QMainWindow):
         self.remCapAlarm1 = QLabel(self)
         self.remCapAlarm1.setText("Remaining Capacity Alarm")
         self.remCapAlarm1.setStyleSheet(GUI_Style.nameLabel)
+        self.remCapAlarm1.setWordWrap(True)
    
         # create input box
         self.remCapAlarmBox1 = QLineEdit(self)
@@ -333,11 +338,13 @@ class Window(QMainWindow):
         self.remCapAlarm_Layout1.addWidget(self.remCapAlarm1)
         self.remCapAlarm_Layout1.addWidget(self.remCapAlarmBox1)
 
+
     def batteryMode_1(self):
          # create label
         self.battMode1 = QLabel(self)
         self.battMode1.setText("Battery Mode")
         self.battMode1.setStyleSheet(GUI_Style.nameLabel)
+        self.battMode1.setWordWrap(True)
         
         # create input box
         self.battModeBox1 = QLineEdit(self)
@@ -354,6 +361,7 @@ class Window(QMainWindow):
         self.voltage1 = QLabel(self)
         self.voltage1.setText("Voltage")
         self.voltage1.setStyleSheet(GUI_Style.nameLabel)
+        self.voltage1.setWordWrap(True)
         
         # create input box
         self.voltageBox1 = QLineEdit(self)
@@ -370,6 +378,7 @@ class Window(QMainWindow):
         self.current1 = QLabel(self)
         self.current1.setText("Current")
         self.current1.setStyleSheet(GUI_Style.nameLabel)
+        self.current1.setWordWrap(True)
    
         # create input box
         self.currentBox1 = QLineEdit(self)
@@ -386,6 +395,7 @@ class Window(QMainWindow):
         self.avgCurr1 = QLabel(self)
         self.avgCurr1.setText("Average Current")
         self.avgCurr1.setStyleSheet(GUI_Style.nameLabel)
+        self.avgCurr1.setWordWrap(True)
    
         # create input box
         self.avgCurrBox1 = QLineEdit(self)
@@ -402,6 +412,7 @@ class Window(QMainWindow):
         self.relStateCharge1 = QLabel(self)
         self.relStateCharge1.setText("Relative State Of Charge")
         self.relStateCharge1.setStyleSheet(GUI_Style.nameLabel)
+        self.relStateCharge1.setWordWrap(True)
        
        # create input box
         self.relStateChargeBox1 = QLineEdit(self)
@@ -418,6 +429,7 @@ class Window(QMainWindow):
         self.absStateCharge1 = QLabel(self)
         self.absStateCharge1.setText("Absolute State Of Charge")
         self.absStateCharge1.setStyleSheet(GUI_Style.nameLabel)
+        self.absStateCharge1.setWordWrap(True)
    
         # create input box
         self.absStateChargeBox1 = QLineEdit(self)
@@ -434,6 +446,7 @@ class Window(QMainWindow):
         self.remainingCapacity1 = QLabel(self)
         self.remainingCapacity1.setText("Remaining Capacity")
         self.remainingCapacity1.setStyleSheet(GUI_Style.nameLabel)
+        self.remainingCapacity1.setWordWrap(True)
    
         # create input box
         self.remainingCapacityBox1 = QLineEdit(self)
@@ -450,6 +463,7 @@ class Window(QMainWindow):
         self.fullChargeCapacity1 = QLabel(self)
         self.fullChargeCapacity1.setText("Full Charge Capacity")
         self.fullChargeCapacity1.setStyleSheet(GUI_Style.nameLabel)
+        self.fullChargeCapacity1.setWordWrap(True)
    
         # create input box
         self.fullChargeCapacityBox1 = QLineEdit(self)
@@ -466,6 +480,7 @@ class Window(QMainWindow):
         self.runTimeToEmpty1 = QLabel(self)
         self.runTimeToEmpty1.setText("Run Time To Empty")
         self.runTimeToEmpty1.setStyleSheet(GUI_Style.nameLabel)
+        self.runTimeToEmpty1.setWordWrap(True)
    
         # create input box
         self.runTimeToEmptyBox1 = QLineEdit(self)
@@ -482,6 +497,7 @@ class Window(QMainWindow):
         self.avgTimeToEmpty1 = QLabel(self)
         self.avgTimeToEmpty1.setText("Average Time To Empty")
         self.avgTimeToEmpty1.setStyleSheet(GUI_Style.nameLabel)
+        self.avgTimeToEmpty1.setWordWrap(True)
    
         # create input box
         self.avgTimeToEmptyBox1 = QLineEdit(self)
@@ -498,6 +514,8 @@ class Window(QMainWindow):
         self.avgTimeToFull1 = QLabel(self)
         self.avgTimeToFull1.setText("Average Time To Full")
         self.avgTimeToFull1.setStyleSheet(GUI_Style.nameLabel)
+        self.avgTimeToFull1.setWordWrap(True)
+        self.avgTimeToFull1.setWordWrap(True)
    
         # create input box
         self.avgTimeToFullBox1 = QLineEdit(self)
@@ -514,6 +532,7 @@ class Window(QMainWindow):
         self.chargingCurrent1 = QLabel(self)
         self.chargingCurrent1.setText("Charging Current")
         self.chargingCurrent1.setStyleSheet(GUI_Style.nameLabel)
+        self.chargingCurrent1.setWordWrap(True)
    
         # create input box
         self.chargingCurrentBox1 = QLineEdit(self)
@@ -530,6 +549,7 @@ class Window(QMainWindow):
         self.chargingVoltage1 = QLabel(self)
         self.chargingVoltage1.setText("Charging Voltage")
         self.chargingVoltage1.setStyleSheet(GUI_Style.nameLabel)
+        self.chargingVoltage1.setWordWrap(True)
    
         # create input box
         self.chargingVoltageBox1 = QLineEdit(self)
@@ -546,6 +566,7 @@ class Window(QMainWindow):
         self.batteryStatus1 = QLabel(self)
         self.batteryStatus1.setText("Battery Status")
         self.batteryStatus1.setStyleSheet(GUI_Style.nameLabel)
+        self.batteryStatus1.setWordWrap(True)
    
         # create input box
         self.batteryStatusBox1 = QLineEdit(self)
@@ -562,6 +583,7 @@ class Window(QMainWindow):
         self.cycleCount1 = QLabel(self)
         self.cycleCount1.setText("Cycle Count")
         self.cycleCount1.setStyleSheet(GUI_Style.nameLabel)
+        self.cycleCount1.setWordWrap(True)
    
         # create input box
         self.cycleCountBox1 = QLineEdit(self)
@@ -578,6 +600,7 @@ class Window(QMainWindow):
         self.serNum1 = QLabel(self)
         self.serNum1.setText("Serial Number")
         self.serNum1.setStyleSheet(GUI_Style.nameLabel)
+        self.serNum1.setWordWrap(True)
    
         # create input box
         self.serNumBox1 = QLineEdit(self)
@@ -677,6 +700,7 @@ class Window(QMainWindow):
         self.remCapAlarm2 = QLabel(self)
         self.remCapAlarm2.setText("Remaining Capacity Alarm")
         self.remCapAlarm2.setStyleSheet(GUI_Style.nameLabel)
+        self.remCapAlarm2.setWordWrap(True)
    
         # create input box
         self.remCapAlarmBox2 = QLineEdit(self)
@@ -757,6 +781,7 @@ class Window(QMainWindow):
         self.relStateCharge2 = QLabel(self)
         self.relStateCharge2.setText("Relative State Of Charge")
         self.relStateCharge2.setStyleSheet(GUI_Style.nameLabel)
+        self.relStateCharge2.setWordWrap(True)
        
        # create input box
         self.relStateChargeBox2 = QLineEdit(self)
@@ -773,6 +798,7 @@ class Window(QMainWindow):
         self.absStateCharge2 = QLabel(self)
         self.absStateCharge2.setText("Absolute State Of Charge")
         self.absStateCharge2.setStyleSheet(GUI_Style.nameLabel)
+        self.absStateCharge2.setWordWrap(True)
    
         # create input box
         self.absStateChargeBox2 = QLineEdit(self)
@@ -789,6 +815,7 @@ class Window(QMainWindow):
         self.remainingCapacity2 = QLabel(self)
         self.remainingCapacity2.setText("Remaining Capacity")
         self.remainingCapacity2.setStyleSheet(GUI_Style.nameLabel)
+        self.remainingCapacity2.setWordWrap(True)
    
         # create input box
         self.remainingCapacityBox2 = QLineEdit(self)
@@ -805,6 +832,7 @@ class Window(QMainWindow):
         self.fullChargeCapacity2 = QLabel(self)
         self.fullChargeCapacity2.setText("Full Charge Capacity")
         self.fullChargeCapacity2.setStyleSheet(GUI_Style.nameLabel)
+        self.fullChargeCapacity2.setWordWrap(True)
    
         # create input box
         self.fullChargeCapacityBox2 = QLineEdit(self)
@@ -821,6 +849,7 @@ class Window(QMainWindow):
         self.runTimeToEmpty2 = QLabel(self)
         self.runTimeToEmpty2.setText("Run Time To Empty")
         self.runTimeToEmpty2.setStyleSheet(GUI_Style.nameLabel)
+        self.runTimeToEmpty2.setWordWrap(True)
    
         # create input box
         self.runTimeToEmptyBox2 = QLineEdit(self)
@@ -837,6 +866,7 @@ class Window(QMainWindow):
         self.avgTimeToEmpty2 = QLabel(self)
         self.avgTimeToEmpty2.setText("Average Time To Empty")
         self.avgTimeToEmpty2.setStyleSheet(GUI_Style.nameLabel)
+        self.avgTimeToEmpty2.setWordWrap(True)
    
         # create input box
         self.avgTimeToEmptyBox2 = QLineEdit(self)
@@ -853,6 +883,7 @@ class Window(QMainWindow):
         self.avgTimeToFull2 = QLabel(self)
         self.avgTimeToFull2.setText("Average Time To Full")
         self.avgTimeToFull2.setStyleSheet(GUI_Style.nameLabel)
+        self.avgTimeToFull2.setWordWrap(True)
    
         # create input box
         self.avgTimeToFullBox2 = QLineEdit(self)
