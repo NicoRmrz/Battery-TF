@@ -30,9 +30,7 @@ class Send_Command_Button(QPushButton):
         self.setText(text)
         self.setParent(window)
         self.console_log = consoleLog
-
         self.sendCommand = inputCommand
-
 
     # Function call for the click event
     def On_Click(self):
@@ -56,7 +54,6 @@ class Send_Command_Button(QPushButton):
     def Reset_GUI(self):
         # Change button back to normal
         self.setStyleSheet(GUI_Style.sendButton)
-
 # --------------------------------------------------------------------------------------------------------------
 # --------------------------------- Secret/ Logo QPushButton Class ---------------------------------------------
 # --------------------------------------------------------------------------------------------------------------
@@ -101,3 +98,176 @@ class Logo_Button(QPushButton):
         self.new_window = self.old_window + '\n' + new_input
         self.large_textbox.setText(self.new_window)
         self.large_textbox.moveCursor(QTextCursor.End)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 40 Ohm Relay 1 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_1_40_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_1_40_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_40Ohm(True)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 60 Ohm Relay 1 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_1_60_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_1_60_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_60Ohm(True)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 500 Ohm Relay 1 QPushButton Class ------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_1_500_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_1_500_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_500Ohm(True)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 1k Ohm Relay 1 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_1_1k_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_1_1k_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_1kOhm(True)
+        self.Reset_GUI()
+            
+    # Resets the necessary objects when the test is reran
+    def Reset_GUI(self):
+        # Change button back to normal
+        self.setStyleSheet(GUI_Style.statusBarButton)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 40 Ohm Relay 2 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_2_40_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_2_40_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_40Ohm(True)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 60 Ohm Relay 2 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_2_60_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_2_60_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_60Ohm(True)
+            
+    # Resets the necessary objects when the test is reran
+    def Reset_GUI(self):
+        # Change button back to normal
+        self.setStyleSheet(GUI_Style.statusBarButton)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 500 Ohm Relay 2 QPushButton Class ------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_2_500_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_2_500_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread = gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_500Ohm(True)
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------- 1k Ohm Relay 2 QPushButton Class -------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+class Relay_2_1k_Ohm(QPushButton):     
+
+    # Initializes the necessary objects into the button class for control
+    def __init__(self, window, text, gpioThread):
+        super(Relay_2_1k_Ohm, self).__init__()
+        self.setText(text)
+        self.setParent(window)
+        self.mainWindow = window
+        self.gpioThread =gpioThread
+
+    # Function call for the click event
+    def On_Click(self):
+        self.setStyleSheet(GUI_Style.buttonPressed)
+
+    # Function call for the Un_click event
+    def Un_Click(self):
+        self.gpioThread.Set_1kOhm(True)
+
+        

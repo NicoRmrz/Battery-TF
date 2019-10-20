@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Battery Test Fixture
+Comment=Battery TF python application to monitor 2 lithion batteries.
+Icon=/home/pi/Desktop/Battery-TF/Logo/logo.png
+Exec=bash /home/pi/Desktop/Battery-TF/openApp.sh
+Type=Application
+Encoding=UTF-8
+Terminal=false
+Categories=None

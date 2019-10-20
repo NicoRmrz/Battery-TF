@@ -7,10 +7,16 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, Q
     QProgressBar, QSizePolicy, QAbstractItemView, QWidget, QTabWidget, QHBoxLayout, QVBoxLayout, QSlider
 from PyQt5.QtGui import QPixmap, QIcon, QFont, QTextCursor, QPalette, QImage, QBrush, QImage
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, pyqtSlot, QObject, QSize
+import RPi.GPIO as GPIO
+
 
 # imports from user made files
 from GUI_Stylesheets import GUI_Stylesheets
-from GUI_Buttons import Send_Command_Button, Logo_Button
+from GUI_Buttons import Send_Command_Button, Logo_Button, Relay_1_40_Ohm, Relay_1_60_Ohm, Relay_1_500_Ohm, Relay_1_1k_Ohm, \
+        Relay_2_40_Ohm, Relay_2_60_Ohm, Relay_2_500_Ohm, Relay_2_1k_Ohm
+from buttonHandler import handlers
+from GPIO_thread1 import GPIO_Ch1_Thread
+from GPIO_thread2 import GPIO_Ch2_Thread
 
 # Current version of application - Update for new builds
 appVersion = "1.0"  # Update version
@@ -22,6 +28,17 @@ Icon_Path = Main_path + "/Logo/logo.png"
 # Instantiate style sheets for GUI Objects
 GUI_Style = GUI_Stylesheets()
 
+#BCM chip pinout
+Relay1_40 = 7
+Relay1_60 = 12
+Relay1_500 = 16
+Relay1_1k = 20
+Relay2_40 = 21
+Relay2_60 = 13
+Relay2_500 = 19
+Relay2_1k = 26
+
+
 # --------------------------------------------------------------------------------------------------------------
 # --------------------------------- Main Window Class ----------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------------
@@ -30,26 +47,37 @@ class Window(QMainWindow):
     # Initialization of the GUI
     def __init__(self):
         super(Window, self).__init__()
-        self.setGeometry(50, 50, 1100, 750)
-        self.setWindowTitle("Battery TF v" + appVersion)
+        # ~ self.setGeometry(50, 50, 1100, 750)
+        self.setWindowTitle("Battery TF")
         self.setStyleSheet(GUI_Style.mainWindow)
-        self.setMinimumSize(1100, 750)
+        # ~ self.setMinimumSize(1100, 750)
         self.setWindowIcon(QIcon(Icon_Path))
 
         # --------------------------------------------------------------
         # -------------------- Initialize  -----------------------------
         # --------------------------------------------------------------
-
+	# GPIO Configuration
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(Relay1_40,  GPIO.OUT)
+        GPIO.setup(Relay1_60,  GPIO.OUT)
+        GPIO.setup(Relay1_500,  GPIO.OUT)
+        GPIO.setup(Relay1_1k,  GPIO.OUT)
+        GPIO.setup(Relay2_40,  GPIO.OUT)
+        GPIO.setup(Relay2_60,  GPIO.OUT)
+        GPIO.setup(Relay2_500,  GPIO.OUT)
+        GPIO.setup(Relay2_1k,  GPIO.OUT)
 
         # --------------------------------------------------------------
         # ---------------- Instantiate All Threads  --------------------
         # --------------------------------------------------------------
-
+        self.GPIO_ch1 = GPIO_Ch1_Thread(GPIO)
+        self.GPIO_ch2 = GPIO_Ch2_Thread(GPIO)
 
         # --------------------------------------------------------------
         # ---------------- Start All Threads ---------------------------
         # --------------------------------------------------------------
-
+        self.GPIO_ch1.start()
+        self.GPIO_ch2.start()
 
         # --------------------------------------------------------------
         # ---------------- Create Main Widget --------------------------
@@ -84,7 +112,7 @@ class Window(QMainWindow):
         Main_Title_Layout.addWidget(self.Logo_btn, 0, Qt.AlignRight)
         Main_Title_Layout.addWidget(self.MainTitleText, 0, Qt.AlignLeft)
         Main_Title_Layout.setSpacing(20)
-        Main_Title_Layout.setContentsMargins(0, 0, 350, 0)
+        Main_Title_Layout.setContentsMargins(0, 0, 50, 0)
 
         # Layout command prompt and send button
         promptLayout = QHBoxLayout()
@@ -246,8 +274,18 @@ class Window(QMainWindow):
         self.centralWidget().setLayout(Full_Window_layout)
         self.centralWidget().isWindow()
 
+
+        self.handleButtons()
+        
+        # Connect Signals
+        self.GPIO_ch1.doneFlag1.connect(self.handle.ch1Buttons)
+        self.GPIO_ch2.doneFlag2.connect(self.handle.ch2Buttons)
+        
         # Display GUI Objects
-        self.show()
+        # ~ self.show()
+        #~ self.showFullScreen()
+
+        self.showMaximized()
     # --------------------------------------------------------------------------------------------------------------
     # ----------------------------- GUI Objects/ Functions ---------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------
@@ -259,7 +297,14 @@ class Window(QMainWindow):
 
         if key == Qt.Key_Return:  # Send button
             self.send_btn.Un_Click()
-
+    # ------------------------------------------------------------------
+    # ------------------- Handlers -------------------------------------
+    # ------------------------------------------------------------------
+    def handleButtons(self):
+            self.handle = handlers(self.relay1_40, self.relay1_60, self.relay1_500, self.relay1_1k, 
+            self.relay2_40, self.relay2_60, self.relay2_500, self.relay2_1k, 
+            self.GPIO_ch1, self.GPIO_ch2)
+        
     # ------------------------------------------------------------------
     # ------------------- Main Title Function --------------------------
     # ------------------------------------------------------------------
@@ -274,7 +319,7 @@ class Window(QMainWindow):
         self.Logo_btn.pressed.connect(self.Logo_btn.On_Click)
         self.Logo_btn.released.connect(self.Logo_btn.Un_Click)
         self.Logo_btn.setIcon(QIcon(Icon_Path))
-        self.Logo_btn.setIconSize(QSize(80, 80))
+        self.Logo_btn.setIconSize(QSize(300, 80))
     # ------------------------------------------------------------------
     # -------------------  Create Console Log --------------------------
     # ------------------------------------------------------------------
@@ -1061,21 +1106,55 @@ class Window(QMainWindow):
     def StatusBar(self):
         self.statusBar = QStatusBar()
         self.statusBar.setStyleSheet(GUI_Style.statusBarWhite)
+        
+        self.relay1_40 = Relay_1_40_Ohm(self, "40\u03A9 Relay 1", self.GPIO_ch1)
+        self.relay1_40.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_40.pressed.connect(self.relay1_40.On_Click)
+        self.relay1_40.released.connect(self.relay1_40.Un_Click)
+        
+        self.relay1_60 = Relay_1_60_Ohm(self, "60\u03A9 Relay 1", self.GPIO_ch1)
+        self.relay1_60.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_60.pressed.connect(self.relay1_60.On_Click)
+        self.relay1_60.released.connect(self.relay1_60.Un_Click)
+        
+        self.relay1_500 = Relay_1_500_Ohm(self, "500\u03A9 Relay 1", self.GPIO_ch1)
+        self.relay1_500.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_500.pressed.connect(self.relay1_500.On_Click)
+        self.relay1_500.released.connect(self.relay1_500.Un_Click)
+        
+        self.relay1_1k = Relay_1_1k_Ohm(self, "1k\u03A9 Relay 1", self.GPIO_ch1)
+        self.relay1_1k.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_1k.pressed.connect(self.relay1_1k.On_Click)
+        self.relay1_1k.released.connect(self.relay1_1k.Un_Click)
+        
+        self.relay2_40 = Relay_2_40_Ohm(self, "40\u03A9 Relay 2", self.GPIO_ch2)
+        self.relay2_40.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_40.pressed.connect(self.relay2_40.On_Click)
+        self.relay2_40.released.connect(self.relay2_40.Un_Click)
+        
+        self.relay2_60 = Relay_2_60_Ohm(self, "60\u03A9 Relay 2", self.GPIO_ch2)
+        self.relay2_60.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_60.pressed.connect(self.relay2_60.On_Click)
+        self.relay2_60.released.connect(self.relay2_60.Un_Click)
+        
+        self.relay2_500 = Relay_2_500_Ohm(self, "500\u03A9 Relay 2", self.GPIO_ch2)
+        self.relay2_500.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_500.pressed.connect(self.relay2_500.On_Click)
+        self.relay2_500.released.connect(self.relay2_500.Un_Click)
+        
+        self.relay2_1k = Relay_2_1k_Ohm(self, "1k\u03A9 Relay 2", self.GPIO_ch2)
+        self.relay2_1k.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_1k.pressed.connect(self.relay2_1k.On_Click)
+        self.relay2_1k.released.connect(self.relay2_1k.Un_Click)
 
-        self.batt1 = QLabel()
-        self.batt1.setMinimumSize(50, 12)
-        self.batt1.setStyleSheet(GUI_Style.statusBar_widgets)
-        self.batt1.setText("| Battery 1")
-        self.batt1.setAlignment(Qt.AlignCenter)
-
-        self.batt2 = QLabel()
-        self.batt2.setMinimumSize(50, 12)
-        self.batt2.setStyleSheet(GUI_Style.statusBar_widgets)
-        self.batt2.setText("| Battery 2")
-        self.batt2.setAlignment(Qt.AlignCenter)
-
-        self.statusBar.addPermanentWidget(self.batt1, 0)
-        self.statusBar.addPermanentWidget(self.batt2, 0)
+        self.statusBar.addPermanentWidget(self.relay1_40, 0)
+        self.statusBar.addPermanentWidget(self.relay1_60, 0)
+        self.statusBar.addPermanentWidget(self.relay1_500, 0)
+        self.statusBar.addPermanentWidget(self.relay1_1k, 0)
+        self.statusBar.addPermanentWidget(self.relay2_40, 0)
+        self.statusBar.addPermanentWidget(self.relay2_60, 0)
+        self.statusBar.addPermanentWidget(self.relay2_500, 0)
+        self.statusBar.addPermanentWidget(self.relay2_1k, 0)
 
         self.statusBar.showMessage("Starting Up... ", 4000)
 
@@ -1086,7 +1165,9 @@ class Window(QMainWindow):
     def closeEvent(self, *args, **kwargs):
       #  self.RPICaptureThread.Set_Exit_Program(True)
        # self.RPICaptureThread.wait(100)
-        pass
+        
+        GPIO.cleanup()
+
 
 # ----------------------------------------------------------------------
 # -------------------- MAIN LOOP ---------------------------------------

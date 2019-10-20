@@ -91,6 +91,18 @@ class GUI_Stylesheets(QObject):
                            "padding: 4px"
                            )
 
+        self.statusBarButton = ("font: bold 12px Verdana; "
+                           "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
+                                "stop:0 rgba(88, 139, 174, 240), "
+                                "stop:1 rgba(255,255,255,255)); "
+                           "border-style: outset; "
+                           "border-radius: 4px; "
+                           "border-width: 1px; "
+                           "border-color: white; "
+			   "color: white; "
+                           "padding: 4px"
+                           )
+			   
         self.buttonPressed = ("font: bold 12px Verdana; "
 							  "background-color: qlineargradient(spread:pad x1:0.45, y1:0.3695, x2:0.427, y2:0, "
 							  "stop:0 rgba(213, 213, 213, 240), "
