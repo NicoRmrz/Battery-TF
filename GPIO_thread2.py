@@ -11,7 +11,7 @@ Relay2_500 = 19
 Relay2_1k = 26
                 
 # --------------------------------------------------------------------------------------------------------------
-# ----------------------------------- VIdeo Stream Thread Class ------------------------------------------------
+# ----------------------------------- GPIO Channel 2 Thread Class ------------------------------------------------
 # --------------------------------------------------------------------------------------------------------------   
 class GPIO_Ch2_Thread(QThread):
 	doneFlag2 = pyqtSignal(str) 
@@ -24,11 +24,16 @@ class GPIO_Ch2_Thread(QThread):
 		self.set500 = False
 		self.set1k = False
 		self.GPIO = GPIO
+		self.setLow = False
         
     #Sets up the program to exit when the main window is shutting down
 	def Set_Exit_Program(self, exiter):
 		self.exitProgram = exiter
 		
+	#Sets all GPIO pins Low
+	def	setAllLow(self, state):
+		self.setLow = state
+				
 	# Set 40 ohm load
 	def Set_40Ohm(self, state):
 		self.set40 = state
@@ -49,10 +54,23 @@ class GPIO_Ch2_Thread(QThread):
 		self.setPriority(QThread.HighestPriority)
 
 		while (1):
+			if self.setLow == True:
+				self.GPIO.output(Relay2_40, GPIO.LOW)
+				self.GPIO.output(Relay2_60, GPIO.LOW)
+				self.GPIO.output(Relay2_500, GPIO.LOW)
+				self.GPIO.output(Relay2_1k, GPIO.LOW)
+				self.setLow = False
+			
 			if self.set40 == True:
 				if self.GPIO.input(Relay2_40) == 0:
 					self.GPIO.output(Relay2_40, GPIO.HIGH)
+					self.GPIO.output(Relay2_60, GPIO.LOW)
+					self.GPIO.output(Relay2_500, GPIO.LOW)
+					self.GPIO.output(Relay2_1k, GPIO.LOW)
 					self.doneFlag2.emit("40H")
+					self.doneFlag2.emit("60L")
+					self.doneFlag2.emit("500L")
+					self.doneFlag2.emit("1kL")
 
 				else: 
 					self.GPIO.output(Relay2_40, GPIO.LOW)
@@ -65,7 +83,13 @@ class GPIO_Ch2_Thread(QThread):
 			if self.set60 == True:
 				if self.GPIO.input(Relay2_60) == 0:
 					self.GPIO.output(Relay2_60, GPIO.HIGH)
+					self.GPIO.output(Relay2_40, GPIO.LOW)
+					self.GPIO.output(Relay2_500, GPIO.LOW)
+					self.GPIO.output(Relay2_1k, GPIO.LOW)
 					self.doneFlag2.emit("60H")
+					self.doneFlag2.emit("40L")
+					self.doneFlag2.emit("500L")
+					self.doneFlag2.emit("1kL")
 
 				else: 
 					self.GPIO.output(Relay2_60, GPIO.LOW)
@@ -77,7 +101,13 @@ class GPIO_Ch2_Thread(QThread):
 			if self.set500 == True:
 				if self.GPIO.input(Relay2_500) == 0:
 					self.GPIO.output(Relay2_500, GPIO.HIGH)
+					self.GPIO.output(Relay2_40, GPIO.LOW)
+					self.GPIO.output(Relay2_60, GPIO.LOW)
+					self.GPIO.output(Relay2_1k, GPIO.LOW)
 					self.doneFlag2.emit("500H")
+					self.doneFlag2.emit("40L")
+					self.doneFlag2.emit("60L")
+					self.doneFlag2.emit("1kL")
 
 				else: 
 					self.GPIO.output(Relay2_500, GPIO.LOW)
@@ -89,7 +119,13 @@ class GPIO_Ch2_Thread(QThread):
 			if self.set1k == True:
 				if self.GPIO.input(Relay2_1k) == 0:
 					self.GPIO.output(Relay2_1k, GPIO.HIGH)
+					self.GPIO.output(Relay2_40, GPIO.LOW)
+					self.GPIO.output(Relay2_60, GPIO.LOW)
+					self.GPIO.output(Relay2_500, GPIO.LOW)
 					self.doneFlag2.emit("1kH")
+					self.doneFlag2.emit("40L")
+					self.doneFlag2.emit("60L")
+					self.doneFlag2.emit("500L")
 
 				else: 
 					self.GPIO.output(Relay2_1k, GPIO.LOW)
@@ -101,5 +137,5 @@ class GPIO_Ch2_Thread(QThread):
 				self.exitProgram = False
 				break
             
-			time.sleep(0.01)
+			time.sleep(0.2)
 

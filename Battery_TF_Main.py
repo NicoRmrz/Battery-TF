@@ -24,6 +24,7 @@ appVersion = "1.0"  # Update version
 # Icon Image locations
 Main_path = os.getcwd() + "/"
 Icon_Path = Main_path + "/Logo/logo.png"
+Mediatech_Path = Main_path + "/Logo/Medicatech.png"
 
 # Instantiate style sheets for GUI Objects
 GUI_Style = GUI_Stylesheets()
@@ -78,6 +79,9 @@ class Window(QMainWindow):
         # --------------------------------------------------------------
         self.GPIO_ch1.start()
         self.GPIO_ch2.start()
+        
+        self.GPIO_ch1.setAllLow(True)
+        self.GPIO_ch2.setAllLow(True)
 
         # --------------------------------------------------------------
         # ---------------- Create Main Widget --------------------------
@@ -318,7 +322,7 @@ class Window(QMainWindow):
         self.Logo_btn.setStyleSheet(GUI_Style.startButton)
         self.Logo_btn.pressed.connect(self.Logo_btn.On_Click)
         self.Logo_btn.released.connect(self.Logo_btn.Un_Click)
-        self.Logo_btn.setIcon(QIcon(Icon_Path))
+        self.Logo_btn.setIcon(QIcon(Mediatech_Path))
         self.Logo_btn.setIconSize(QSize(300, 80))
     # ------------------------------------------------------------------
     # -------------------  Create Console Log --------------------------
@@ -1108,42 +1112,42 @@ class Window(QMainWindow):
         self.statusBar.setStyleSheet(GUI_Style.statusBarWhite)
         
         self.relay1_40 = Relay_1_40_Ohm(self, "40\u03A9 Relay 1", self.GPIO_ch1)
-        self.relay1_40.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_40.setStyleSheet(GUI_Style.buttonPressed)
         self.relay1_40.pressed.connect(self.relay1_40.On_Click)
         self.relay1_40.released.connect(self.relay1_40.Un_Click)
         
         self.relay1_60 = Relay_1_60_Ohm(self, "60\u03A9 Relay 1", self.GPIO_ch1)
-        self.relay1_60.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_60.setStyleSheet(GUI_Style.buttonPressed)
         self.relay1_60.pressed.connect(self.relay1_60.On_Click)
         self.relay1_60.released.connect(self.relay1_60.Un_Click)
         
         self.relay1_500 = Relay_1_500_Ohm(self, "500\u03A9 Relay 1", self.GPIO_ch1)
-        self.relay1_500.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_500.setStyleSheet(GUI_Style.buttonPressed)
         self.relay1_500.pressed.connect(self.relay1_500.On_Click)
         self.relay1_500.released.connect(self.relay1_500.Un_Click)
         
         self.relay1_1k = Relay_1_1k_Ohm(self, "1k\u03A9 Relay 1", self.GPIO_ch1)
-        self.relay1_1k.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay1_1k.setStyleSheet(GUI_Style.buttonPressed)
         self.relay1_1k.pressed.connect(self.relay1_1k.On_Click)
         self.relay1_1k.released.connect(self.relay1_1k.Un_Click)
         
         self.relay2_40 = Relay_2_40_Ohm(self, "40\u03A9 Relay 2", self.GPIO_ch2)
-        self.relay2_40.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_40.setStyleSheet(GUI_Style.buttonPressed)
         self.relay2_40.pressed.connect(self.relay2_40.On_Click)
         self.relay2_40.released.connect(self.relay2_40.Un_Click)
         
         self.relay2_60 = Relay_2_60_Ohm(self, "60\u03A9 Relay 2", self.GPIO_ch2)
-        self.relay2_60.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_60.setStyleSheet(GUI_Style.buttonPressed)
         self.relay2_60.pressed.connect(self.relay2_60.On_Click)
         self.relay2_60.released.connect(self.relay2_60.Un_Click)
         
         self.relay2_500 = Relay_2_500_Ohm(self, "500\u03A9 Relay 2", self.GPIO_ch2)
-        self.relay2_500.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_500.setStyleSheet(GUI_Style.buttonPressed)
         self.relay2_500.pressed.connect(self.relay2_500.On_Click)
         self.relay2_500.released.connect(self.relay2_500.Un_Click)
         
         self.relay2_1k = Relay_2_1k_Ohm(self, "1k\u03A9 Relay 2", self.GPIO_ch2)
-        self.relay2_1k.setStyleSheet(GUI_Style.statusBarButton)
+        self.relay2_1k.setStyleSheet(GUI_Style.buttonPressed)
         self.relay2_1k.pressed.connect(self.relay2_1k.On_Click)
         self.relay2_1k.released.connect(self.relay2_1k.Un_Click)
 
@@ -1163,10 +1167,12 @@ class Window(QMainWindow):
     # ------------------------------------------------------------------
     # Stop all threads when GUI is closed
     def closeEvent(self, *args, **kwargs):
-      #  self.RPICaptureThread.Set_Exit_Program(True)
-       # self.RPICaptureThread.wait(100)
-        
         GPIO.cleanup()
+        self.GPIO_ch1.Set_Exit_Program(True)
+        self.GPIO_ch1.wait(100)
+        self.GPIO_ch2.Set_Exit_Program(True)
+        self.GPIO_ch2.wait(100)
+        
 
 
 # ----------------------------------------------------------------------
