@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Battery TF
+Comment=
+Icon=/home/pi/Desktop/Battery-TF-master/Logo/logo.png
+Exec=bash /home/pi/Desktop/Battery-TF-master/openApp.sh
+Type=Application
+Encoding=UTF-8
+Terminal=false
+Categories=None
